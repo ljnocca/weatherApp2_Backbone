@@ -1,3 +1,18 @@
+//currently.icon    hourly.data.icon      daily.data.icon
+
+// 2. weather image based on icon state
+// clear-day, * Sun.svg
+// clear-night, * Moon.svg
+// rain, * Cloud-Rain.svg
+// snow, * Cloud-Snow.svg
+// sleet, * Cloud-Hail.svg
+// wind, * Wind.svg
+// fog, * Cloud-Fog.svg
+// cloudy, - Cloud.svg
+// partly-cloudy-day, * Cloud-Sun.svg
+// partly-cloudy-night * Cloud-Moon.svg
+//'<object data="climacons-master/SVG/Thermometer.svg" type="image/svg+xml"></object>'
+
 // API URLS:
 var baseURL = 'https://api.darksky.net/forecast/f693ad4fa47137321f70f403e91be488/'
 var googleAPI = 'https://maps.googleapis.com/maps/api/geocode/json?address='
@@ -11,7 +26,6 @@ var containerNode = document.querySelector('.weatherContainer')
 // CONTROLLER:
 var WeatherRouter = Backbone.Router.extend({
 	routes:{
-
 		":lat/:lng/current" : 'showCurrent',
 		":lat/:lng/daily" : 'showDaily',
 		":lat/:lng/hourly" : 'showHourly',
@@ -72,9 +86,9 @@ function currentHTML(currentWeather) {
     htmlString += '<div class="innerDiv currentWeather">'
     htmlString +=	'<h1>NOW</h1>'
     htmlString += 	'<h3>'+ currentWeather.currently.summary+ '</h3>'
-    htmlString += 	'<h3>' + Math.floor(currentWeather.currently.temperature) + ' &#8457</h3>'
-    htmlString += 	'<h4>Feels like ' + Math.floor(currentWeather.currently.apparentTemperature) + ' &#8457</h4>'
-    htmlString += 	'<h4>'+ Math.floor(currentWeather.currently.precipProbability*100) + '% chance of rain</h5>'
+    htmlString += 	'<h3><object data="climacons-master/SVG/Thermometer.svg" type="image/svg+xml"></object>' + Math.floor(currentWeather.currently.temperature) + ' &#8457'
+    htmlString += 	' | Feels like ' + Math.floor(currentWeather.currently.apparentTemperature) + ' &#8457</h3>'
+    htmlString += 	'<h4><object data="climacons-master/SVG/Umbrella.svg" type="image/svg+xml"></object>'+ Math.floor(currentWeather.currently.precipProbability*100) + '% chance of rain</h5>'
     // htmlString +=   '<canvas id="current" width="128" height="128"></canvas>'
     htmlString += '</div>'
     containerNode.innerHTML= htmlString
@@ -111,19 +125,19 @@ function dayConverter (unixTime){
   	var date = new Date(unixTime*1000);
 	var day = date.getDay();
     if (day === 1){
-        return 'Monday'
+        return 'Mon'
     }if (day === 2){
-        return 'Tuesday'
+        return 'Tue'
     }if (day === 3){
-        return 'Wednesday'
+        return 'Wed'
     }if (day === 4){
-        return 'Thursday'
+        return 'Thu'
     }if (day === 5){
-        return 'Friday'
+        return 'Fri'
     }if (day === 6){
-        return 'Saturday'
+        return 'Sat'
     }if (day === 0){
-        return 'Sunday'
+        return 'Sun'
     }
 }
 
@@ -183,7 +197,7 @@ searchNode.addEventListener('keydown',function (event){
 		var firstLetter = city.substring(0,1).toUpperCase()
 		var capitalizedCity = firstLetter + city.substring(1,city.length)
 		var pageName = document.querySelector('#pageName')
-		pageName.innerHTML = '<h1>'+ capitalizedCity + " weather</h1>"
+		pageName.innerHTML = '<h1>'+ capitalizedCity + " Weather</h1>"
 		
 		var googlePromise = $.getJSON(googleAPI+city)
 		googlePromise.then(handleCity)

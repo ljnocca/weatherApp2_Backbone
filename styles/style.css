@@ -51,6 +51,11 @@ body {
     padding-left: 10px;
 }
 
+.innerDiv:hover {
+    color: black;
+    background: rgba(255, 255, 255, 0.5);
+}
+
 #loader{
 	text-align: center;
 	margin-top: 20px;
@@ -119,5 +124,7 @@ body {
 	top:1px;
 }
 
-
+object{
+	vertical-align: middle;
+}
 
